@@ -1,0 +1,29 @@
+# Local and production configuration
+/config.php
+/.env
+/.env.*
+!.env.example
+
+# Logs, backups and database exports
+*.log
+*.bak
+*.backup
+*.old
+*.sql.gz
+*.dump
+/backups/
+/backup/
+
+# Runtime cache and generated content
+/storage/cache/*
+!/storage/cache/.htaccess
+!/storage/cache/index.html
+/uploads/media/*
+!/uploads/media/.htaccess
+!/uploads/media/index.html
+
+# Local/editor/OS noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

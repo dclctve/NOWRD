@@ -1,0 +1,3 @@
+<?php
+require __DIR__.'/_common.php'; api_method_get();
+try{$q=$pdo->query("SELECT c.id,c.name,c.slug,c.description,COUNT(DISTINCT p.id) AS published_posts FROM categories c JOIN post_categories pc ON pc.category_id=c.id JOIN posts p ON p.id=pc.post_id AND p.status='published' AND (p.published_at IS NULL OR p.published_at<=NOW()) GROUP BY c.id,c.name,c.slug,c.description ORDER BY c.name ASC");$items=$q->fetchAll();api_out(['data'=>$items,'meta'=>['api_version'=>'1','count'=>count($items)]]);}catch(Throwable $e){error_log('NOWRD API categories failed: '.$e->getMessage());api_out(['error'=>['code'=>'server_error','message'=>'Unable to retrieve categories.']],500);}

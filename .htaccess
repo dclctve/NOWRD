@@ -1,0 +1,27 @@
+Options -Indexes
+<FilesMatch "^(config\.php|config\.example\.php|database\.sql|README\.md)$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Uploaded media must never execute as server-side code.
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>
+
+# Optional friendly aliases for search engines and feed readers.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+  RewriteRule ^rss\.xml$ rss.php [L]
+</IfModule>
+
+# v26: deny direct access to common environment, backup, and VCS artifacts.
+<FilesMatch "(^\.env|\.(bak|backup|old|orig|sql|sqlite|log|ini|dist)$|^composer\.(json|lock)$|^package(-lock)?\.json$)">
+  Require all denied
+</FilesMatch>
